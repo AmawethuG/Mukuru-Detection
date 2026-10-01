@@ -1,0 +1,22 @@
+{
+  "project_type": "FastAPI backend (Python 3.11) + React/Vite/TypeScript frontend, SQLite via SQLAlchemy, scikit-learn classifier, pure-Python risk engine",
+  "language": "Python (backend) + TypeScript (frontend)",
+  "build_system": "pip/requirements.txt for backend; npm/Vite for frontend. Backend entry point: uvicorn backend.main:app --reload. Frontend entry point: npm run dev (in web/). Scripts run from repo root.",
+  "test_framework": "pytest for backend (backend/tests/). Run: pytest backend/tests/",
+  "build_command": "No separate compile step for backend. Frontend: npm run build (in web/).",
+  "test_command": "pytest backend/tests/",
+  "verification_instructions": "1. From repo root: pip install -r backend/requirements.txt\n2. python backend/seed.py\n3. uvicorn backend.main:app --reload  (should start on :8000)\n4. pytest backend/tests/  (all tests green)\n5. python scripts/train_classifier.py  (saves backend/model/classifier.pkl)\n6. python scripts/evaluate_classifier.py  (FP rate <= 10%)\n7. In web/: npm install && npm run dev (renders on :5173)",
+  "snapshot_or_generated_files": "backend/model/classifier.pkl — produced by: python scripts/train_classifier.py",
+  "environment_constraints": "All paths in DB and file operations must be absolute. backend/engine/ must have ZERO FastAPI imports. Never store raw message text — SHA-256 hash only. Duress login response is IDENTICAL in shape AND timing to normal login (check BOTH hashes always with secrets.compare_digest).",
+  "contribution_requirements": "shared/reason_codes.json and i18n/en.json must NOT be modified. All reason/advice codes in API responses must exist in shared/reason_codes.json. All i18n keys must match en.json keys (enforced by test_i18n_parity.py).",
+  "key_patterns": "Pydantic v2 schemas throughout. SQLAlchemy 2.x ORM with UUID PKs. Bearer token auth (opaque UUID, not JWT). bcrypt PIN hashing. slowapi rate limiting on /login. Tier thresholds: SAFE=0-39, CAUTION=40-69, HIGH_RISK=70-100. Score blend: RULES_WEIGHT*rules_score + CLASSIFIER_WEIGHT*classifier_score. Reason codes from shared/reason_codes.json only.",
+  "relevant_files": [
+    "/Users/zamadangwana/Mukuru-Detection/shared/reason_codes.json",
+    "/Users/zamadangwana/Mukuru-Detection/i18n/en.json",
+    "/Users/zamadangwana/Mukuru-Detection/docs/api_contract.md",
+    "/Users/zamadangwana/Mukuru-Detection/.kiro/specs/mukuru-detection/design.md",
+    "/Users/zamadangwana/Mukuru-Detection/.kiro/specs/mukuru-detection/requirements.md",
+    "/Users/zamadangwana/Mukuru-Detection/.kiro/specs/mukuru-detection/tasks.md"
+  ],
+  "directory_structure": "backend/ — FastAPI app, models, schemas, routers, engine (pure Python, no FastAPI), decoy/, model/; web/ — React+Vite+TS frontend; shared/ — frozen reason_codes.json; i18n/ — lang JSON files; data/ — training/library JSON; scripts/ — train/evaluate classifier; docs/ — api_contract.md, README, demo_script"
+}

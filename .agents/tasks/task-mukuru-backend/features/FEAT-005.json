@@ -1,0 +1,36 @@
+{
+  "id": "FEAT-005",
+  "type": "feat",
+  "description": "End-to-end test, README, demo script, .gitignore, .env.example cleanup, and final polish. Depends on FEAT-001 through FEAT-004. This FEAT ties everything together and ensures the demo story runs in a single pytest invocation.",
+  "status": "pending",
+  "steps": [
+    "1. Create backend/tests/test_e2e_demo.py using httpx.AsyncClient with pytest.mark.asyncio. Use a pytest fixture that creates an isolated in-memory SQLite database and test app instance (override DATABASE_URL='sqlite:///:memory:' in settings, call init_db()). Six assertions in order:\n  a. POST /register with {phone:'+27900000001', country:'ZA', language:'zu', pin:'1234', duress_pin:'9999'} -> 201, has token + user fields.\n  b. POST /scan with the fake-job demo message from en.json ('demo.sample_scams.fake_job' value) -> tier='HIGH_RISK', category='fake_job_offer'.\n  c. POST /transactions/check to {recipient:'+27700000099', amount:'500.00', currency:'ZAR', country:'ZA'} -> AFTER_RISKY_MESSAGE in reasons (due to step b) AND NEW_RECIPIENT in reasons.\n  d. POST /login with duress_pin='9999' -> response JSON keys are IDENTICAL set to normal login JSON keys (sorted(resp.json().keys()) == sorted(normal_login_resp.json().keys())).\n  e. GET /accounts/me with duress session token -> balance='0.00'.\n  f. POST /transactions/send in duress session -> HTTP 200, query DB to confirm the created Transaction has is_decoy=True.",
+
+    "2. Create docs/README.md. Sections: Project Overview (2 sentences), Demo Story (Blessing's journey), Prerequisites (Python 3.11+, Node 18+), Quick Start (3 commands: pip install -r backend/requirements.txt && python backend/seed.py; uvicorn backend.main:app --reload; cd web && npm install && npm run dev), Environment Variables (reference .env.example), Running Tests (pytest backend/tests/), Running Evaluation (python scripts/evaluate_classifier.py), Recorded FP rate (leave as placeholder: 'See latest evaluation run'), Architecture Summary (2 paragraphs), Out of Scope notice.",
+
+    "3. Create docs/demo_script.md with a 10-step 5-minute judge walkthrough as specified in tasks.md §10.3. Each step is a numbered bullet with specific UI actions and expected outcomes.",
+
+    "4. Create/update .gitignore at repo root to exclude: *.pkl, *.db, .env, __pycache__/, *.pyc, node_modules/, dist/, .DS_Store, backend/model/*.pkl.",
+
+    "5. Verify backend/.env.example exists and lists every env var from docs/api_contract.md (DATABASE_URL, SECRET_KEY, MOCK_SAFE_BROWSING, SAFE_BROWSING_API_KEY, LLM_ENABLED, LLM_API_KEY, LLM_BASE_URL, LLM_MODEL, RULES_WEIGHT, CLASSIFIER_WEIGHT, CORS_ORIGINS) with documented defaults and no real secret values.",
+
+    "6. Confirm all router stubs no longer have 'mock: true' in their responses (grep backend/routers/ for 'mock'). Remove any remaining stub 'mock': true fields.",
+
+    "7. Run the full test suite: pytest backend/tests/ -v. All tests must pass. Run python scripts/train_classifier.py then python scripts/evaluate_classifier.py — must exit 0. Record the actual FP rate in docs/README.md."
+  ],
+  "acceptance_criteria": [
+    "pytest backend/tests/test_e2e_demo.py — all 6 assertions pass",
+    "pytest backend/tests/ — full suite green (test_duress, test_rules, test_transaction_rules, test_i18n_parity, test_e2e_demo all pass)",
+    "python scripts/evaluate_classifier.py exits with code 0 (FP rate <= 10%)",
+    "docs/README.md and docs/demo_script.md exist and are complete",
+    ".gitignore excludes *.pkl, *.db, .env, node_modules/, dist/",
+    "No 'mock: true' fields in any router response"
+  ],
+  "verification": [
+    "pytest backend/tests/test_e2e_demo.py -v",
+    "pytest backend/tests/ -v",
+    "python scripts/train_classifier.py && python scripts/evaluate_classifier.py"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

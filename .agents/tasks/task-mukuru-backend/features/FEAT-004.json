@@ -1,0 +1,26 @@
+{
+  "id": "FEAT-004",
+  "type": "feat",
+  "description": "Complete i18n key-parity test, i18n test, and full test suite (test_i18n_parity.py, test_rules.py finalization). Also adds the remaining 6 draft language files if not fully done in FEAT-001, and verifies they pass parity. Depends on FEAT-001 (i18n files created) and FEAT-002 (rules tests). This FEAT is small and can be done in one pass.",
+  "status": "pending",
+  "steps": [
+    "1. Audit all 8 i18n files against i18n/en.json. For any language file missing keys (may happen if FEAT-001 draft files were incomplete), add the missing keys with English placeholder values. Ensure _meta.status='draft, needs native review' on all non-en/zu files. Ensure i18n/zu.json has _meta.status='complete'. Ensure i18n/hi.json has _romanized companion keys for all ussd.* and sms.* keys.",
+
+    "2. Create backend/tests/test_i18n_parity.py. Load i18n/en.json using absolute path (os.path.join from file's __file__, going up to repo root). Get reference_keys = set of all keys in en.json excluding '_meta'. For each of ['zu','fr','sw','st','hi','nl','pt']: load i18n/{lang}.json, get lang_keys, compute missing = reference_keys - lang_keys, assert len(missing)==0 with message f'{lang}: missing keys: {sorted(missing)}'. All 7 assertions must pass.",
+
+    "3. Run pytest backend/tests/test_i18n_parity.py. If it fails, fix the specific missing keys in the identified language files (do not modify en.json). Re-run until all pass.",
+
+    "4. Verify complete test suite: pytest backend/tests/ -v. Fix any pre-existing test failures discovered (import errors, missing fixtures, wrong assertion values). The goal at end of this FEAT: test_duress.py, test_rules.py, test_transaction_rules.py, test_i18n_parity.py all pass."
+  ],
+  "acceptance_criteria": [
+    "pytest backend/tests/test_i18n_parity.py — all 7 language assertions pass",
+    "All 8 i18n/*.json files exist and each contains every key from i18n/en.json",
+    "pytest backend/tests/ — all tests in the suite pass (no failures)"
+  ],
+  "verification": [
+    "pytest backend/tests/test_i18n_parity.py -v",
+    "pytest backend/tests/ -v"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

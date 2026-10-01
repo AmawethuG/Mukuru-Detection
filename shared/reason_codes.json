@@ -1,0 +1,234 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Frozen vocabulary for Mukuru Detection. Do not rename or remove codes without updating all i18n files and the risk engine. Add new codes only with a spec change.",
+    "languages": ["en", "zu", "fr", "sw", "st", "hi", "nl", "pt"]
+  },
+
+  "tiers": {
+    "SAFE":      { "min": 0,  "max": 39,  "color": "green",  "i18n_key": "tier.safe" },
+    "CAUTION":   { "min": 40, "max": 69,  "color": "yellow", "i18n_key": "tier.caution" },
+    "HIGH_RISK": { "min": 70, "max": 100, "color": "red",    "i18n_key": "tier.high_risk" }
+  },
+
+  "categories": {
+    "phishing":       { "i18n_key": "category.phishing" },
+    "romance_scam":   { "i18n_key": "category.romance_scam" },
+    "fake_job_offer": { "i18n_key": "category.fake_job_offer" },
+    "advance_fee":    { "i18n_key": "category.advance_fee" },
+    "impersonation":  { "i18n_key": "category.impersonation" },
+    "unknown":        { "i18n_key": "category.unknown" }
+  },
+
+  "message_reason_codes": {
+    "SUSPICIOUS_LINK": {
+      "weight": 35,
+      "i18n_key": "reason.suspicious_link",
+      "description": "Message contains a link that matches a known malicious or suspicious domain",
+      "categories": ["phishing", "impersonation"]
+    },
+    "REQUESTS_OTP_PIN": {
+      "weight": 40,
+      "i18n_key": "reason.requests_otp_pin",
+      "description": "Message asks the recipient to share an OTP, PIN, or password",
+      "categories": ["phishing", "impersonation"]
+    },
+    "URGENCY_LANGUAGE": {
+      "weight": 20,
+      "i18n_key": "reason.urgency_language",
+      "description": "Message uses urgent language to pressure immediate action",
+      "categories": ["phishing", "fake_job_offer", "advance_fee", "impersonation"]
+    },
+    "IMPERSONATION": {
+      "weight": 35,
+      "i18n_key": "reason.impersonation",
+      "description": "Message impersonates a known bank, courier, government body, or service",
+      "categories": ["impersonation", "phishing"]
+    },
+    "MOVE_TO_WHATSAPP": {
+      "weight": 25,
+      "i18n_key": "reason.move_to_whatsapp",
+      "description": "Message asks the recipient to continue the conversation on WhatsApp",
+      "categories": ["romance_scam", "fake_job_offer", "advance_fee"]
+    },
+    "ASKS_FOR_MONEY": {
+      "weight": 30,
+      "i18n_key": "reason.asks_for_money",
+      "description": "Message directly or indirectly requests a money transfer or fee payment",
+      "categories": ["fake_job_offer", "advance_fee", "romance_scam"]
+    },
+    "FAKE_JOB_OFFER": {
+      "weight": 35,
+      "i18n_key": "reason.fake_job_offer",
+      "description": "Message offers a job, salary, or work-from-home opportunity with suspicious conditions",
+      "categories": ["fake_job_offer"]
+    },
+    "ADVANCE_FEE": {
+      "weight": 35,
+      "i18n_key": "reason.advance_fee",
+      "description": "Message requests an upfront fee to release funds, a prize, or an inheritance",
+      "categories": ["advance_fee"]
+    },
+    "ROMANCE_SCAM": {
+      "weight": 30,
+      "i18n_key": "reason.romance_scam",
+      "description": "Message uses romantic or emotional language to build trust before requesting money",
+      "categories": ["romance_scam"]
+    },
+    "LOOKALIKE_DOMAIN": {
+      "weight": 30,
+      "i18n_key": "reason.lookalike_domain",
+      "description": "Message contains a domain name very similar to a known legitimate domain",
+      "categories": ["phishing", "impersonation"]
+    },
+    "SHORTENED_URL": {
+      "weight": 15,
+      "i18n_key": "reason.shortened_url",
+      "description": "Message contains a shortened URL that hides the actual destination",
+      "categories": ["phishing", "impersonation", "fake_job_offer"]
+    },
+    "PHONE_IN_MESSAGE": {
+      "weight": 15,
+      "i18n_key": "reason.phone_in_message",
+      "description": "Message contains a phone number different from the sender, typically used to redirect communication",
+      "categories": ["fake_job_offer", "impersonation", "romance_scam"]
+    },
+    "GENERIC_GREETING": {
+      "weight": 10,
+      "i18n_key": "reason.generic_greeting",
+      "description": "Message uses a generic greeting like 'Dear Customer' instead of the recipient's name",
+      "categories": ["phishing", "impersonation"]
+    },
+    "EMAIL_MISMATCH": {
+      "weight": 30,
+      "i18n_key": "reason.email_mismatch",
+      "description": "Email sender address and reply-to address do not match",
+      "categories": ["phishing", "impersonation"]
+    },
+    "DISPLAY_NAME_SPOOF": {
+      "weight": 30,
+      "i18n_key": "reason.display_name_spoof",
+      "description": "Email display name matches a known brand but the sending domain does not",
+      "categories": ["phishing", "impersonation"]
+    }
+  },
+
+  "transaction_reason_codes": {
+    "NEW_RECIPIENT": {
+      "weight": 20,
+      "i18n_key": "txn_reason.new_recipient",
+      "description": "Recipient has not received a transfer from this user in the past 90 days"
+    },
+    "UNUSUAL_AMOUNT": {
+      "weight": 30,
+      "i18n_key": "txn_reason.unusual_amount",
+      "description": "Amount is more than twice the user's average send amount over the past 90 days"
+    },
+    "ROUND_LARGE_AMOUNT": {
+      "weight": 20,
+      "i18n_key": "txn_reason.round_large_amount",
+      "description": "Amount is a large round number (≥ R500 / USD 50 and divisible by 100)"
+    },
+    "RAPID_REPEAT_SENDS": {
+      "weight": 25,
+      "i18n_key": "txn_reason.rapid_repeat_sends",
+      "description": "Three or more sends to the same recipient in the past 24 hours"
+    },
+    "AFTER_RISKY_MESSAGE": {
+      "weight": 40,
+      "i18n_key": "txn_reason.after_risky_message",
+      "description": "A HIGH_RISK message scan was recorded for this user in the past 30 minutes"
+    },
+    "NEW_COUNTRY": {
+      "weight": 25,
+      "i18n_key": "txn_reason.new_country",
+      "description": "Destination country has not been used in this user's transaction history"
+    }
+  },
+
+  "advice_codes": {
+    "DO_NOT_SHARE_PIN": {
+      "i18n_key": "advice.do_not_share_pin",
+      "description": "Never share your PIN, OTP, or password with anyone"
+    },
+    "DO_NOT_PAY_UPFRONT": {
+      "i18n_key": "advice.do_not_pay_upfront",
+      "description": "Legitimate employers and prize schemes never ask for upfront fees"
+    },
+    "VERIFY_SENDER": {
+      "i18n_key": "advice.verify_sender",
+      "description": "Call the organisation directly using the number on their official website"
+    },
+    "DO_NOT_CLICK_LINK": {
+      "i18n_key": "advice.do_not_click_link",
+      "description": "Do not click the link; type the address directly into your browser"
+    },
+    "PAUSE_AND_CONFIRM": {
+      "i18n_key": "advice.pause_and_confirm",
+      "description": "Pause this transaction and confirm the recipient's identity before sending"
+    },
+    "REPORT_SCAM": {
+      "i18n_key": "advice.report_scam",
+      "description": "Report this message to your bank or the South African Banking Risk Information Centre (SABRIC)"
+    },
+    "TRUST_YOUR_INSTINCTS": {
+      "i18n_key": "advice.trust_your_instincts",
+      "description": "If something feels wrong, stop and talk to someone you trust before continuing"
+    },
+    "BLOCK_AND_REPORT": {
+      "i18n_key": "advice.block_and_report",
+      "description": "Block this sender and report the message as spam"
+    },
+    "CHECK_URL": {
+      "i18n_key": "advice.check_url",
+      "description": "Check the web address carefully — scammers use addresses that look almost right"
+    }
+  },
+
+  "advice_by_category": {
+    "phishing":       ["DO_NOT_CLICK_LINK", "DO_NOT_SHARE_PIN", "VERIFY_SENDER"],
+    "romance_scam":   ["TRUST_YOUR_INSTINCTS", "DO_NOT_PAY_UPFRONT", "BLOCK_AND_REPORT"],
+    "fake_job_offer": ["DO_NOT_PAY_UPFRONT", "VERIFY_SENDER", "REPORT_SCAM"],
+    "advance_fee":    ["DO_NOT_PAY_UPFRONT", "TRUST_YOUR_INSTINCTS", "REPORT_SCAM"],
+    "impersonation":  ["VERIFY_SENDER", "DO_NOT_SHARE_PIN", "CHECK_URL"],
+    "unknown":        ["TRUST_YOUR_INSTINCTS", "PAUSE_AND_CONFIRM", "REPORT_SCAM"]
+  },
+
+  "advice_by_transaction_reason": {
+    "NEW_RECIPIENT":       ["PAUSE_AND_CONFIRM", "VERIFY_SENDER"],
+    "UNUSUAL_AMOUNT":      ["PAUSE_AND_CONFIRM", "TRUST_YOUR_INSTINCTS"],
+    "ROUND_LARGE_AMOUNT":  ["PAUSE_AND_CONFIRM"],
+    "RAPID_REPEAT_SENDS":  ["PAUSE_AND_CONFIRM", "TRUST_YOUR_INSTINCTS"],
+    "AFTER_RISKY_MESSAGE": ["PAUSE_AND_CONFIRM", "DO_NOT_PAY_UPFRONT", "REPORT_SCAM"],
+    "NEW_COUNTRY":         ["PAUSE_AND_CONFIRM", "VERIFY_SENDER"]
+  },
+
+  "channels": ["web", "ussd", "sms", "email"],
+
+  "explanation_sources": ["rules", "llm"],
+
+  "ussd_menu_options": {
+    "1": "ussd.menu.check_message",
+    "2": "ussd.menu.scam_examples",
+    "3": "ussd.menu.my_account",
+    "4": "ussd.menu.change_language",
+    "5": "ussd.menu.exit"
+  },
+
+  "country_language_defaults": {
+    "ZA": ["en", "zu", "st"],
+    "ZW": ["en"],
+    "MZ": ["pt"],
+    "AO": ["pt"],
+    "CD": ["fr", "sw"],
+    "TZ": ["sw"],
+    "KE": ["sw", "en"],
+    "IN": ["hi", "en"],
+    "NL": ["nl"],
+    "BE": ["nl", "fr"],
+    "FR": ["fr"],
+    "CI": ["fr"],
+    "SN": ["fr"],
+    "CM": ["fr", "en"]
+  }
+}

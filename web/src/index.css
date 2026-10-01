@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  html { font-family: 'Inter', system-ui, sans-serif; }
+  body { @apply bg-white text-mukuru-navy; }
+  * { box-sizing: border-box; }
+}
+
+@layer components {
+  /* Mukuru primary button */
+  .btn-primary {
+    @apply bg-mukuru-green text-white font-semibold px-6 py-3 rounded-full
+           hover:bg-mukuru-green-dark transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-mukuru-green focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Mukuru outlined button */
+  .btn-outline {
+    @apply border-2 border-mukuru-green text-mukuru-green font-semibold px-6 py-3 rounded-full
+           hover:bg-mukuru-green-light transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-mukuru-green focus:ring-offset-2;
+  }
+
+  /* Mukuru ghost button (for nav) */
+  .btn-ghost {
+    @apply text-mukuru-navy font-medium px-4 py-2 rounded-full
+           hover:bg-mukuru-gray-light transition-colors duration-200;
+  }
+
+  /* Form field */
+  .field {
+    @apply w-full border border-mukuru-gray-border rounded-xl px-4 py-3
+           focus:outline-none focus:ring-2 focus:ring-mukuru-green
+           placeholder-gray-400 text-mukuru-navy bg-white;
+  }
+
+  /* Card */
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-mukuru-gray-border p-6;
+  }
+
+  /* Section padding */
+  .section {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}

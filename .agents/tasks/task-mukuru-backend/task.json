@@ -1,0 +1,13 @@
+{
+  "task_id": "task-mukuru-backend",
+  "task_description": "Full backend implementation for Mukuru Detection fraud-detection MVP: scaffold, ORM models, auth, risk engine, classifier, transaction rules, USSD/SMS endpoints, panic/login-guard, i18n files, data samples, seed script, and all tests.",
+  "status": "pending",
+  "feature_order": [
+    "FEAT-001",
+    "FEAT-002",
+    "FEAT-003",
+    "FEAT-004",
+    "FEAT-005"
+  ],
+  "blocked_reason": null
+}
