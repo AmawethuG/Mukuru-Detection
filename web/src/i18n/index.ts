@@ -1,28 +1,7 @@
-// Runtime i18n loader — reads JSON files from web/public/i18n/ via fetch
-// Languages available: en, zu, fr, sw, st, hi, nl, pt
+// i18n helper — loads /i18n/<lang>.json from the public folder at runtime.
+// Falls back key-by-key to "en" if a string is missing in the requested language.
 
 const cache: Record<string, Record<string, string>> = {};
-
-/** Lazy-load a language file. Safe to call multiple times. */
-export async function loadLanguage(lang: string): Promise<void> {
-  if (cache[lang]) return;
-  try {
-    const res = await fetch(`/i18n/${lang}.json`);
-    if (!res.ok) throw new Error(`Failed to load ${lang}`);
-    const data = await res.json();
-    cache[lang] = data as Record<string, string>;
-  } catch {
-    // Silently fall back; t() will use 'en'
-  }
-}
-
-/** Translate a key. Falls back to 'en', then returns the key itself. */
-export function t(key: string, lang: string): string {
-  return cache[lang]?.[key] ?? cache["en"]?.[key] ?? key;
-}
-
-// Pre-load English on module import
-loadLanguage("en");
 
 export const SUPPORTED_LANGUAGES = [
   { code: "en", label: "English" },
@@ -33,4 +12,25 @@ export const SUPPORTED_LANGUAGES = [
   { code: "hi", label: "हिन्दी" },
   { code: "nl", label: "Nederlands" },
   { code: "pt", label: "Português" },
-] as const;
+];
+
+/** Load a language file into the cache. Safe to call multiple times. */
+export async function loadLanguage(lang: string): Promise<void> {
+  if (cache[lang]) return;
+  try {
+    const res = await fetch(`/i18n/${lang}.json`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    cache[lang] = await res.json();
+  } catch {
+    console.warn(`[i18n] Could not load ${lang}.json — falling back to en`);
+    cache[lang] = {};
+  }
+}
+
+/** Translate a key in the given language. Falls back to "en", then to the key itself. */
+export function t(key: string, lang = "en"): string {
+  return cache[lang]?.[key] ?? cache["en"]?.[key] ?? key;
+}
+
+// Pre-load English on module import (always needed as the fallback)
+loadLanguage("en");

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSmsOutbox, postSmsInbound } from "../api/sms";
+import { getSmsOutbox, sendSmsInbound as postSmsInbound } from "../api/sms";
 import { useStore } from "../store/useStore";
 import PhoneFrame from "../components/PhoneFrame";
 
@@ -20,7 +20,7 @@ export default function SMSSimulator() {
   useEffect(() => {
     async function loadOutbox(): Promise<void> {
       try {
-        const res = await getSmsOutbox({});
+        const res = await getSmsOutbox();
         setMessages(
           res.messages.map((m) => ({
             id: m.id,
@@ -47,11 +47,10 @@ export default function SMSSimulator() {
     setMessages((prev) => [...prev, { id: tempId, direction: "outbound", body }]);
 
     try {
-      const res = await postSmsInbound({
-        from: user?.phone ?? "+27831234567",
+      const res = await postSmsInbound(
+        user?.phone ?? "+27831234567",
         body,
-        timestamp: new Date().toISOString(),
-      });
+      );
       setMessages((prev) => [
         ...prev,
         { id: crypto.randomUUID(), direction: "inbound", body: res.reply },

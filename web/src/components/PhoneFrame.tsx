@@ -1,5 +1,5 @@
 // PhoneFrame — Nokia-style phone shell for USSD and SMS simulators
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface PhoneFrameProps {
   children: ReactNode;

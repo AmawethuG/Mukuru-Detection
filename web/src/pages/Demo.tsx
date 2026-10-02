@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { postLogin } from "../api/auth";
+import { login as postLogin } from "../api/auth";
 import { useStore } from "../store/useStore";
 import { t } from "../i18n";
 
@@ -19,7 +19,7 @@ export default function Demo() {
 
   async function loginAs(phone: string, pin: string, name: string): Promise<void> {
     try {
-      const res = await postLogin({ phone, pin });
+      const res = await postLogin(phone, pin);
       setToken(res.token);
       setUser(res.user);
       navigate("/home");

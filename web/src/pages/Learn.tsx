@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getScamsLibrary, LibraryEntry } from "../api/library";
+import { getLibrary as getScamsLibrary, type LibraryEntry } from "../api/library";
 import { useStore } from "../store/useStore";
 import { t } from "../i18n";
 
@@ -34,10 +34,7 @@ export default function Learn() {
     async function load(): Promise<void> {
       setIsLoading(true);
       try {
-        const res = await getScamsLibrary({
-          lang,
-          ...(category ? { category } : {}),
-        });
+        const res = await getScamsLibrary(lang, category || undefined);
         setEntries(res.entries);
       } catch {
         setError(t("common.error", lang));

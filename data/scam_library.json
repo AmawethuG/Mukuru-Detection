@@ -1,0 +1,72 @@
+[
+  {
+    "id": "fake_job_001",
+    "category": "fake_job_offer",
+    "example_message": "Congratulations! You have been selected for a work-from-home job paying R5000/week. To activate your position, pay a R500 registration fee via EFT. WhatsApp +27600000001 to confirm.",
+    "red_flags": ["FAKE_JOB_OFFER", "ASKS_FOR_MONEY", "MOVE_TO_WHATSAPP"],
+    "advice": ["DO_NOT_PAY_UPFRONT", "VERIFY_SENDER", "REPORT_SCAM"]
+  },
+  {
+    "id": "fake_job_002",
+    "category": "fake_job_offer",
+    "example_message": "URGENT HIRING: Online data entry agents needed. Work from home. Earn R200/hour. No experience required. Pay R350 registration fee to access jobs. Limited spots!",
+    "red_flags": ["FAKE_JOB_OFFER", "ASKS_FOR_MONEY", "URGENCY_LANGUAGE"],
+    "advice": ["DO_NOT_PAY_UPFRONT", "TRUST_YOUR_INSTINCTS", "REPORT_SCAM"]
+  },
+  {
+    "id": "phishing_001",
+    "category": "phishing",
+    "example_message": "ABSA BANK: Your account has been suspended due to suspicious activity. Verify now at www.absa-secure-login.co to avoid permanent closure. Ref: 8823",
+    "red_flags": ["IMPERSONATION", "SUSPICIOUS_LINK", "URGENCY_LANGUAGE"],
+    "advice": ["DO_NOT_CLICK_LINK", "VERIFY_SENDER", "DO_NOT_SHARE_PIN"]
+  },
+  {
+    "id": "phishing_002",
+    "category": "phishing",
+    "example_message": "Capitec Bank: Unusual login detected on your account. Enter your PIN at http://capitec-alert.co to confirm it's you and prevent account lockout.",
+    "red_flags": ["IMPERSONATION", "REQUESTS_OTP_PIN", "LOOKALIKE_DOMAIN"],
+    "advice": ["DO_NOT_CLICK_LINK", "DO_NOT_SHARE_PIN", "VERIFY_SENDER"]
+  },
+  {
+    "id": "romance_001",
+    "category": "romance_scam",
+    "example_message": "My darling, I am stuck at customs in Dubai. They are holding my luggage and need $300 to release it. I will pay you back double when I arrive. Please help me, I love you.",
+    "red_flags": ["ROMANCE_SCAM", "ASKS_FOR_MONEY", "URGENCY_LANGUAGE"],
+    "advice": ["TRUST_YOUR_INSTINCTS", "DO_NOT_PAY_UPFRONT", "BLOCK_AND_REPORT"]
+  },
+  {
+    "id": "romance_002",
+    "category": "romance_scam",
+    "example_message": "Hi, I met you on the dating app and I think we have a special connection. I am a soldier deployed overseas. I need $500 to access my pay. I will send it back with interest.",
+    "red_flags": ["ROMANCE_SCAM", "ASKS_FOR_MONEY", "MOVE_TO_WHATSAPP"],
+    "advice": ["TRUST_YOUR_INSTINCTS", "BLOCK_AND_REPORT", "REPORT_SCAM"]
+  },
+  {
+    "id": "advance_fee_001",
+    "category": "advance_fee",
+    "example_message": "Dear Beneficiary, you have been selected to receive $1.5 million from the estate of Dr. James Okafor. To release your funds, you must first pay a processing fee of $200 USD.",
+    "red_flags": ["ADVANCE_FEE", "ASKS_FOR_MONEY", "GENERIC_GREETING"],
+    "advice": ["DO_NOT_PAY_UPFRONT", "TRUST_YOUR_INSTINCTS", "REPORT_SCAM"]
+  },
+  {
+    "id": "advance_fee_002",
+    "category": "advance_fee",
+    "example_message": "Congratulations! You won R50,000 in the MTN loyalty prize draw. To release your winnings, pay R250 admin fee via EFT. Reply YES to receive payment instructions.",
+    "red_flags": ["ADVANCE_FEE", "ASKS_FOR_MONEY", "URGENCY_LANGUAGE"],
+    "advice": ["DO_NOT_PAY_UPFRONT", "TRUST_YOUR_INSTINCTS", "REPORT_SCAM"]
+  },
+  {
+    "id": "impersonation_001",
+    "category": "impersonation",
+    "example_message": "SARS NOTICE: You have an outstanding tax refund of R3,200. Claim it at www.sars-refund-portal.net within 24 hours or it will be forfeited.",
+    "red_flags": ["IMPERSONATION", "SUSPICIOUS_LINK", "URGENCY_LANGUAGE"],
+    "advice": ["VERIFY_SENDER", "DO_NOT_CLICK_LINK", "CHECK_URL"]
+  },
+  {
+    "id": "impersonation_002",
+    "category": "impersonation",
+    "example_message": "SASSA: Your social grant has been suspended. Reactivate by sending your ID number and PIN to 0762223344. Urgent action required within 24 hours.",
+    "red_flags": ["IMPERSONATION", "REQUESTS_OTP_PIN", "URGENCY_LANGUAGE"],
+    "advice": ["DO_NOT_SHARE_PIN", "VERIFY_SENDER", "REPORT_SCAM"]
+  }
+]

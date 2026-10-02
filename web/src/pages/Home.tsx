@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "../store/useStore";
-import { postPanic } from "../api/panic";
+import { triggerPanic as postPanic } from "../api/panic";
 import { t } from "../i18n";
 
 export default function Home() {

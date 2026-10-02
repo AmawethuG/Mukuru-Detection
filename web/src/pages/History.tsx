@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getMe, AccountResponse } from "../api/auth";
-import { getTransactionHistory, TransactionHistoryItem } from "../api/transactions";
+import { getMe, type AccountResponse } from "../api/auth";
+import { getHistory, type Transaction as TransactionHistoryItem } from "../api/transactions";
 import { useStore } from "../store/useStore";
 import { t } from "../i18n";
 
@@ -18,7 +18,7 @@ export default function History() {
       try {
         const [acct, history] = await Promise.all([
           getMe(),
-          getTransactionHistory({}),
+          getHistory(),
         ]);
         setAccount(acct);
         setTransactions(history.transactions);

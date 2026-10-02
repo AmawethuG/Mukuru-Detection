@@ -1,4 +1,5 @@
-import { apiFetch } from "./client";
+// USSD endpoint returns plain text, not JSON — use bare fetch (no apiFetch wrapper)
+const BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 
 export interface UssdRequest {
   sessionId: string;
@@ -7,10 +8,8 @@ export interface UssdRequest {
   text: string;
 }
 
-/** Returns raw CON/END prefixed string from the backend */
+/** POST to /ussd — returns raw "CON ..." or "END ..." string. */
 export const postUssd = async (req: UssdRequest): Promise<string> => {
-  const BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
-  // USSD endpoint returns plain text, not JSON
   const res = await fetch(`${BASE}/ussd`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useStore } from "../store/useStore";
-import { loadLanguage, t } from "../i18n";
+import { loadLanguage } from "../i18n";
 import { updateLanguage } from "../api/auth";
 import { triggerPanic } from "../api/panic";
 

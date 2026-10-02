@@ -2,11 +2,13 @@
 const BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 
 export class ApiError extends Error {
-  constructor(
-    public status: number,
-    public body: Record<string, unknown>
-  ) {
-    super((body.message as string) ?? `HTTP ${status}`);
+  status: number;
+  body: Record<string, unknown>;
+
+  constructor(status: number, body: Record<string, unknown>) {
+    super((body["message"] as string) ?? `HTTP ${status}`);
+    this.status = status;
+    this.body = body;
   }
 }
 
@@ -24,7 +26,7 @@ export async function apiFetch<T>(
   const res = await fetch(`${BASE}${path}`, { ...options, headers });
 
   if (!res.ok) {
-    const body = await res.json().catch(() => ({ message: res.statusText }));
+    const body = await res.json().catch(() => ({ message: res.statusText })) as Record<string, unknown>;
     throw new ApiError(res.status, body);
   }
   return res.json() as Promise<T>;

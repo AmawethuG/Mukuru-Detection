@@ -17,10 +17,7 @@ export default function LoginGuard() {
   async function handleSimulate(): Promise<void> {
     setIsLoading(true);
     try {
-      const res = await postLoginGuardEvent({
-        event_type: "dating_app_login",
-        answer: null,
-      });
+      const res = await postLoginGuardEvent("dating_app_login");
       setQuestion(res.checkin_question ?? t("login_guard.checkin_question", lang));
       setPhase("awaiting_answer");
     } catch {
@@ -33,10 +30,7 @@ export default function LoginGuard() {
   async function handleAnswer(answer: "yes" | "no"): Promise<void> {
     setIsLoading(true);
     try {
-      const res = await postLoginGuardEvent({
-        event_type: "dating_app_login",
-        answer,
-      });
+      const res = await postLoginGuardEvent("dating_app_login", answer);
       setStatus(res.status);
       setAdvice(res.advice ?? []);
       setPhase("done");
